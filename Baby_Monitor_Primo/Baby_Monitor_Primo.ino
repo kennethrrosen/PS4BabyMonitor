@@ -1,74 +1,62 @@
-/*
-HC-05 Bluetooth Joystick on Nano
-*/
- 
-//Arduino Nano pin numbers
-const int SW_pin = 2; //digital pin connected to switch output
-const int X_pin = 0; //analogue pin connected to X output
-const int Y_pin = 1; //analogue pin connected to Y output
-int xAxis, yAxis;
 #include <SoftwareSerial.h>
-SoftwareSerial BTSerial(10, 11); //  TX,RX
+SoftwareSerial BTSerial(10, 11); // RX | TX
 
-char c = ' ';
-boolean NL = true;
+const int SW = 9;
+const int Y = 16;
+const int X = 17;
+
+int xPosition = 0;
+int yPosition = 0;
+int buttonState = 0;
 
 void setup() {
-  Serial.begin(9600);
-  Serial.println("Sketch HC-05");
-  Serial.println("Arduino with HC-05 is ready");
-  Serial.println("Make sure Both NL & CR are set");
-  Serial.println("");
-  pinMode(SW_pin, INPUT);
-  digitalWrite(SW_pin, HIGH);
+  pinMode(SW, INPUT);
+  digitalWrite(SW, HIGH);
   BTSerial.begin(38400);
-  Serial.println("BTserial started at 38400");
-  Serial.println("");
-;}
+  Serial.begin(9600);
+}
 
 void loop() {
-  xAxis = analogRead(A2);
-  yAxis = analogRead(A1);
-  Serial.write(xAxis/4);
-  Serial.write(yAxis/4);
-  delay(20);
-  Serial.print("Switch:  ");
-  Serial.print(digitalRead(SW_pin));
-  Serial.print("\n");
-  Serial.print("X-axis:  ");
-  Serial.print(analogRead(X_pin));
-  Serial.print("\n");
-  Serial.print("Y-axis:  ");
-  Serial.println(analogRead(Y_pin));
-  Serial.print("\n\n");
-  delay(500);
+  xPosition = analogRead(X);
+  yPosition = analogRead(Y);
+  buttonState = digitalRead(SW);
 
-{
-  if (BTSerial.available())
-  {
-    c = BTSerial.read();
-   Serial.write(c);
+  Serial.print("SW:");
+  Serial.println(digitalRead(SW));
+  if (buttonState == 1) {
+    BTSerial.write('0');
+  }
+  else if (buttonState == 0) {
+    BTSerial.write('1');
+  }
+/*
+  Serial.print("X:");
+  Serial.println(analogRead(X));
+  if (xPosition <= 5 && yPosition >= 500) {
+    BTSerial.write('2');
+  }
+  else if (xPosition >= 1000 && yPosition <= 500) {
+    BTSerial.write('3');
   }
 
-  if (Serial.available())
-  {
-    c = Serial.read();
-    BTSerial.write(c);
-
-    if (NL) {
-      Serial.print(">");
-      NL = false;
-    }
-    Serial.write(c);
-    if (c == 10) {
-      NL = true;
-    }
-      xAxis = analogRead(A2);
-  yAxis = analogRead(A1);
-
-  Serial.write(xAxis/4);
-  Serial.write(yAxis/4);
-  delay(20);
-    }
+  Serial.print("Y:");
+  Serial.println(analogRead(Y));
+  if (yPosition <= 5 && xPosition >= 500) {
+    BTSerial.write('4');
   }
+  else if (yPosition >= 1000 && xPosition >= 500) {
+    BTSerial.write('5');
+  }
+    BTSerial.print("SW:");
+    BTSerial.println(digitalRead(SW));
+    Serial.print("SW:");
+    Serial.println(digitalRead(SW));
+    BTSerial.print("X:");
+    BTSerial.println(analogRead(X));
+    Serial.print("X:");
+    Serial.println(analogRead(X));
+    BTSerial.print("Y:");
+    BTSerial.println(analogRead(Y));
+    Serial.print("Y:");
+    Serial.println(analogRead(Y));*/
 }
