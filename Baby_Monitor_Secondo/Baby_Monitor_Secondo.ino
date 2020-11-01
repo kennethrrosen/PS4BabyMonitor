@@ -1,102 +1,36 @@
-/*
-HC-05 Bluetooth and Relays on Uno
-*/
-
-int relayPin1 = 7;
-int relayPin2 = 6;
-int relayPin3 = 5;
-int relayPin4 = 4;
-int xAxis, yAxis;
-unsigned int  x = 0;
-unsigned int  y = 0;
-int state = 0;
 #include <SoftwareSerial.h>
-SoftwareSerial BTSerial(0,1);//TX,RX
+SoftwareSerial BTSerial(10, 11); // RX | TX
 
-char c='#';
-boolean NL= true;
+const int relayPin1 = 8;
+const int relayPin2 = 7;
+const int relayPin3 = 6;
+const int relayPin4 = 5;
+const int relayPin5 = 4;
 
 void setup() {
-  Serial.begin(9600);
-  Serial.println("Sketch HC-05");
-  Serial.println("Arduino with HC-05 is ready");
-  Serial.println("Make sure Both NL & CR are set");
-  Serial.println("");
+  pinMode(relayPin1, OUTPUT);
+  digitalWrite(relayPin1, LOW);
+  pinMode(relayPin2, OUTPUT);
+  digitalWrite(relayPin2, LOW);
+  pinMode(relayPin3, OUTPUT);
+  digitalWrite(relayPin3, LOW);
+  pinMode(relayPin4, OUTPUT);
+  digitalWrite(relayPin4, LOW);
+  pinMode(relayPin5, OUTPUT);
+  digitalWrite(relayPin5, LOW);
   BTSerial.begin(38400);
-  Serial.println("BTserial started at 38400");
-  Serial.println("");
+  Serial.begin(9600);
+  Serial.println("<Arduino is ready>");
 }
 
 void loop() {
-  if(BTSerial.available() > 0)
-  { 
-    state = Serial.read(); 
- }
-  x = 510 / 4;
-  y = 510 / 4;
-  while (Serial.available() >= 2) {
-    x = Serial.read();
-    delay(10);
-    y = Serial.read();
+  while (BTSerial.available()) {
+    Serial.write(BTSerial.read());
   }
-  delay(10);
-  xAxis = x*4;
-  yAxis = y*4;
-  if (yAxis < 470) {
+  if (BTSerial.read() == '0') {
     digitalWrite(relayPin1, LOW);
-    digitalWrite(relayPin2, HIGH);
-    digitalWrite(relayPin3, HIGH);
-    digitalWrite(relayPin4, HIGH);
   }
-  else if (yAxis > 550) {
+  else if (BTSerial.read() == '1') {
     digitalWrite(relayPin1, HIGH);
-    digitalWrite(relayPin2, LOW);
-    digitalWrite(relayPin3, HIGH);
-    digitalWrite(relayPin4, HIGH);
-  if (xAxis < 470) {
-    digitalWrite(relayPin1, HIGH);
-    digitalWrite(relayPin2, HIGH);
-    digitalWrite(relayPin3, LOW);
-    digitalWrite(relayPin4, HIGH);
   }
-  else if (xAxis > 550) {
-    digitalWrite(relayPin1, HIGH);
-    digitalWrite(relayPin2, HIGH);
-    digitalWrite(relayPin3, HIGH);
-    digitalWrite(relayPin4, LOW);
-  }
- if (state == '0') {
-  digitalWrite(relayPin1, HIGH);
-  state = 0;
- }
- else if (state == '1') {
-  digitalWrite(relayPin1, LOW);
-  state = 0;
- }
- 
-if (state == '0') {
-  digitalWrite(relayPin2, HIGH);
-  state = 0;
- }
- else if (state == '1') {
-  digitalWrite(relayPin2, LOW);
-  state = 0;
- }
- if (state == '0') {
-  digitalWrite(relayPin3, HIGH);
-  state = 0;
- }
- else if (state == '1') {
-  digitalWrite(relayPin3, LOW);
-  state = 0;
- }
- if (state == '0') {
-  digitalWrite(relayPin4, HIGH);
-  state = 0;
- }
- else if (state == '1') {
-  digitalWrite(relayPin4, LOW);
-  state = 0;
-    }
-  ;}
 }
