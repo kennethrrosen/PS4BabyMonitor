@@ -1,3 +1,12 @@
+/*
+  PS4BabyMonitor (HC-05 primo)
+  by: Questionable Mechanics
+  contact: questionable.mechanics@gmail.com
+  last rev: 10/2020
+  This sketch is in the public domain
+  Note: Developed and tested using Arduino IDE ver 1.8.42.0
+*/
+
 #include <SoftwareSerial.h>
 SoftwareSerial BTSerial(10, 11); // RX | TX
 
@@ -29,7 +38,6 @@ void loop() {
   else if (buttonState == 0) {
     BTSerial.write('1');
   }
-/*
   Serial.print("X:");
   Serial.println(analogRead(X));
   if (xPosition <= 5 && yPosition >= 500) {
@@ -38,7 +46,6 @@ void loop() {
   else if (xPosition >= 1000 && yPosition <= 500) {
     BTSerial.write('3');
   }
-
   Serial.print("Y:");
   Serial.println(analogRead(Y));
   if (yPosition <= 5 && xPosition >= 500) {
@@ -47,16 +54,4 @@ void loop() {
   else if (yPosition >= 1000 && xPosition >= 500) {
     BTSerial.write('5');
   }
-    BTSerial.print("SW:");
-    BTSerial.println(digitalRead(SW));
-    Serial.print("SW:");
-    Serial.println(digitalRead(SW));
-    BTSerial.print("X:");
-    BTSerial.println(analogRead(X));
-    Serial.print("X:");
-    Serial.println(analogRead(X));
-    BTSerial.print("Y:");
-    BTSerial.println(analogRead(Y));
-    Serial.print("Y:");
-    Serial.println(analogRead(Y));*/
 }
