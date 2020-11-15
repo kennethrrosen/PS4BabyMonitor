@@ -44,7 +44,7 @@ TOTAL:   | | £141.28
 
 #### Schematic
 
-<img src="https://i.ibb.co/hFvsNYd/Baby-Schematic-Loose.png" ALIGHT="center"/>
+<img src="https://i.ibb.co/pPQ2X3N/Baby-Schematic-Loose.png" ALIGHT="center"/>
 
 
 #### Standalone UNO TK
