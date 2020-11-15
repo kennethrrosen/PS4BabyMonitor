@@ -42,7 +42,9 @@ TOTAL:   | | £141.28
 
 *3D-print your case to fit your needs/space
 
-#### Fritzing TK
+#### Schematic
+
+<img src="https://i.ibb.co/hFvsNYd/Baby-Schematic-Loose.png" ALIGHT="center"/>
 
 
 #### Standalone UNO TK
